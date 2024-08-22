@@ -2,11 +2,11 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import { combineReducers } from 'redux';
-
+ 
 // Define initial state
 const initialState = {
   chats: [
-   { 
+   {
      messages: [],
      userInput: ""
    }
@@ -15,7 +15,7 @@ const initialState = {
   loading: false,
   fileSelected: false,
 };
-
+ 
 // Create a slice
 const chatSlice = createSlice({
   name: 'chat',
@@ -44,23 +44,23 @@ const chatSlice = createSlice({
     },
   },
 });
-
+ 
 // Export actions
 export const { setMessages, setUserInput, setLoading, setFileSelected, addNewChat, setCurrentChat } = chatSlice.actions;
-
+ 
 // Persist configuration
 const persistConfig = {
   key: 'root',
   storage,
 };
-
+ 
 // Combine reducers
 const rootReducer = combineReducers({
   chat: chatSlice.reducer,
 });
-
+ 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-
+ 
 // Configure store
 const store = configureStore({
   reducer: persistedReducer,
@@ -69,7 +69,8 @@ const store = configureStore({
       serializableCheck: false, // redux-persist requires this to be false
     }),
 });
-
+ 
 const persistor = persistStore(store);
-
+ 
 export { store, persistor };
+ 

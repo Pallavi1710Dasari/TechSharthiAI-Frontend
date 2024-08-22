@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Box } from '@mui/material';
-import { FaGoogle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Typography } from '@mui/material';
 import { signupUser } from '../services/serviceApi'; // Import the signup service
+import { FaGoogle } from 'react-icons/fa';
+
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -9,6 +11,8 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -16,6 +20,8 @@ const Signup = () => {
       const data = await signupUser({ username, email, password });
       setSuccess(data.message);
       setError('');
+      localStorage.setItem('hasSignedUp', true); // Mark as signed up
+      navigate('/login'); // Redirect to login page after signup
     } catch (err) {
       setError(err.message);
       setSuccess('');
@@ -30,7 +36,7 @@ const Signup = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100vh',
+      height: '90vh',
       backgroundColor: '#f5f5f5',
     }}>
       <div style={{
@@ -73,7 +79,7 @@ const Signup = () => {
             required
             style={{
               width: '100%',
-              marginBottom: '15px',
+              marginBottom: '5px',
               borderRadius: '5px',
             }}
           />
@@ -88,7 +94,7 @@ const Signup = () => {
             required
             style={{
               width: '100%',
-              marginBottom: '15px',
+              marginBottom: '5px',
               borderRadius: '5px',
             }}
           />
@@ -103,7 +109,7 @@ const Signup = () => {
             required
             style={{
               width: '100%',
-              marginBottom: '15px',
+              marginBottom: '5px',
               borderRadius: '5px',
             }}
           />
@@ -121,13 +127,13 @@ const Signup = () => {
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
-              marginBottom: '15px',
+              marginBottom: '5px',
             }}
           >
             Sign Up
           </Button>
         </form>
-        <div style={{ marginBottom: '15px' }}>
+        <div style={{ marginBottom: '5px' }}>
           <a href="/forgot-password" style={{ color: '#4285f4', textDecoration: 'none', fontSize: '14px' }}>
             Forgot Password?
           </a>
@@ -157,7 +163,7 @@ const Signup = () => {
         <div style={{
           fontSize: '12px',
           color: '#777',
-          marginTop: '15px',
+          marginTop: '5px',
         }}>
           By signing up, you agree to our{' '}
           <a href="/terms" style={{ color: '#4285f4', textDecoration: 'none' }}>
