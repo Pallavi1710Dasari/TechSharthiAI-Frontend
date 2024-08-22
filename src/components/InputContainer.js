@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Box, TextField, IconButton, Paper, Grid } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { AiOutlinePlus } from "react-icons/ai";
@@ -9,21 +9,22 @@ import { handleSendMessage, handleFileChange, handleCapture } from '../services/
 import { addNewChat, setUserInput } from '../store/store';
 import CameraCapture from './CameraCapture';
 import Popup from './Popup'
-
+ 
 const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) => {
-
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const inputRef = useRef(null);
+ 
   const { chats, currentChatIndex } = useSelector((state) => state.chat);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isCameraCaptureOpen, setIsCameraCaptureOpen] = useState(false);
   const [popupButton, setPopupButton] = useState(null)
-  
-
+ 
+ 
   const userInput = chats[currentChatIndex]?.userInput || '';
-
+ 
   const onFileChange = (event) => {
     setIsPopupOpen(false)
     handleFileChange(event, dispatch, chats, currentChatIndex);
@@ -31,7 +32,7 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
       navigate("/chats")
     }
   }
-
+ 
   const OnImageChange = () =>{
     if (location.pathname === "/"){
       dispatch(addNewChat());
@@ -41,7 +42,7 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
       ImageInputRef.current.click();
     }
   }
-
+ 
   const onCapturePic = (imageSrc) => {
     setIsPopupOpen(false);
     handleCapture(imageSrc, dispatch, chats, currentChatIndex);
@@ -49,7 +50,7 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
       navigate("/chats");
     }
   };
-
+ 
   const onSendMessage = () => {
     if (location.pathname === "/"){
       // dispatch(addNewChat())
@@ -59,16 +60,16 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
       handleSendMessage(chats, currentChatIndex, dispatch)
     }
   };
-
+ 
   const handleCameraClick = () => {
     closePopup();
     setIsCameraCaptureOpen(true);
   };
-
+ 
   const handleCloseCameraCapture = () => {
     setIsCameraCaptureOpen(false);
   };
-
+ 
   const openPopup = (event) => {
     setIsPopupOpen(true);
     setPopupButton(event.currentTarget)
@@ -77,26 +78,35 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
   const closePopup = () => {
     setIsPopupOpen(false);
   };
-
-
+ 
+ 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       onSendMessage();
     }
   };
-
+ 
+  const handleFocus = () => {
+    if (inputRef.current) {
+      inputRef.current.focus(); // Focus the input field
+    }
+  };
+ 
+ 
   return(
-        <Paper elevation={6} sx={{ 
-              display: pdfPage ? 'none' :'flex', 
-              alignItems: 'center', 
-              mb: 3, 
+        <Paper elevation={6} sx={{
+              display: pdfPage ? 'none' :'flex',
+              alignItems: 'center',
+              mb: 3,
               padding: 2,
               width: "80%",
               height: "5%",
               position: "sticky",
               top: "100%",
-              // borderTop: '1px solid #E0E0E0' 
-              }}>
+              // borderTop: '1px solid #E0E0E0'
+              }}
+              onClick={handleFocus}
+              >
      <Grid container >
       <Grid item xs={12}>
           <input
@@ -106,13 +116,14 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
             value={userInput}
             onChange={(e) => dispatch(setUserInput({ chatIndex: currentChatIndex, userInput: e.target.value }))}
             onKeyPress={handleKeyPress}
+            ref={inputRef}
           />
       </Grid>
        <Grid item xs={6} sx={{display: "flex"}}>
            <IconButton color="primary" aria-label="plus" onClick={openPopup} sx={{fontSize: "15px", margin: "5px 10px 5px 0px"}}>
               <AiOutlinePlus/>
            </IconButton>
-           {isPopupOpen && 
+           {isPopupOpen &&
            <Popup handleCameraClick={handleCameraClick} handleFileChange={handleFileChange} closePopup={closePopup} isPopupOpen={isPopupOpen} popupButton={popupButton}/>}
              <IconButton color="primary" aria-label="image" sx={{fontSize: "15px", margin: "5px 10px 5px 0px"}} onClick={OnImageChange}>    
                 <FaRegImage/>
@@ -147,10 +158,10 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
           <SendIcon/>
         </IconButton>
       </Grid>
-    </Grid> 
+    </Grid>
        <CameraCapture isCameraCaptureOpen={isCameraCaptureOpen} onCapture={onCapturePic} onClose={handleCloseCameraCapture} />        
   </Paper>
   )
 };
-
+ 
 export default InputContainer;

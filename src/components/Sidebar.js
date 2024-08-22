@@ -15,6 +15,7 @@ import { addNewChat, setCurrentChat, setLoading } from '../store/store';
 import { AiOutlineAppstore } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import PlanModel from './PlanModel';
+import { BsFillChatRightDotsFill } from "react-icons/bs";
 
 
 
@@ -248,12 +249,16 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
     return (
       <Box variant="permanent"
               sx={{
-                width: drawerWidth,
-                marginBottom: "auto",
-                height: "200px",
+                width: drawerWidth - 50,
+                margin: "auto",
+                height: "300px",
                 overflow: "auto",
                 padding: "10px",
-                cursor:"pointer"
+                scrollbarWidth: 'none',
+                '-ms-overflow-style': 'none',
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
               }}
               >
      
@@ -261,37 +266,44 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
           {chats.map((chat, index) =>{
             // console.log(chat)
             return(
-            chat.messages.length > 1 &&   
-            <div key={index} 
-                style={{ cursor: 'pointer', 
+            chat.messages.length > 1 &&  
+            <div key={index}
+                style={{ cursor: 'pointer',
                          fontWeight: currentChatIndex === index ? 800 : 500,
                          backgroundColor:  currentChatIndex === index && '#331a00',
                          listStyleType: "none",
-                         margin: "10px 20px 10px 0px", 
-                         color: "yellow",
+                         margin: "2px 20px 2px 0px",
+                         color: "#ffffff",
                          fontSize: "10px",
                          fontFamily: "Roboto",
-                         padding: "3px",
+                         padding: "2px",
                          borderRadius: "2px",
-                         textAlign: "center"
-                        }} 
+                        //  textAlign: "center"
+                        }}
                          onClick={() => handleChatSelection(index)}
                          >
-               <p style={{ margin: "2px" }}>
-                {chat.messages[0]?.content[0].text}
-              </p>
-              {chat.messages[0]?.content[0].imageName && (
-                <p style={{ margin: "2px", fontStyle: "italic" }}>
-                  {chat.messages[0].content[0].imageName}
-                </p>
-              )}
+               <Box sx={{display: "flex",
+                         justifyContent: "flex-start",
+                         alignItems: "center",
+                         margin: "4px"
+                         }}>
+               <BsFillChatRightDotsFill style={{
+                padding: "1px",
+                color:
+                chat.messages[0].content[0].image_url
+                ? "red" : "#ffffff",
+                }} />
+               <span style={{margin: "0px 0px 3px 3px"}}>
+                 {chat.messages[0]?.content[0].text}
+                </span>
+              </Box>
             </div>
              )})}
         </div>
       </Box>
     )
   }
-
+ 
 
   return (
     <Drawer
@@ -342,8 +354,9 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
                 height: isSidebarOpen ? "40px": "fit-content",
                 color: "#ffffff",
                 marginBottom: isSidebarOpen && "10px",
+                marginLeft : isSidebarOpen ? "5px" : "40px",
                 textAlign: "center",
-                backgroundColor: "#3c38ff",
+                backgroundColor:  isSidebarOpen ?  'transparent' : "#3c38ff",
                 borderRadius: isSidebarOpen ? "80px" : "2px"
               }}
         >
