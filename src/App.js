@@ -1,3 +1,37 @@
+// import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+// import Home from './pages/Home';
+// import Chat from './pages/Chat';
+// import PdfPage from './pages/PdfPage';
+// import Login from './pages/Login';
+// import Signup from './pages/Signup';
+// import { useEffect, useState } from 'react';
+
+// function App() {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     setIsLoggedIn(!!token);
+//   }, []);
+
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
+
+//        {/* <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <Signup />} /> */}
+//         <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <Signup />} />
+//         <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <Login />} />
+//         <Route path="/chats" element={isLoggedIn ? <Chat /> : <Navigate to="/login" />} />
+//         <Route path="/chatwithdoc" element={isLoggedIn ? <PdfPage /> : <Navigate to="/login" />} />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Chat from './pages/Chat';
@@ -5,23 +39,25 @@ import PdfPage from './pages/PdfPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 function App() {
-  const isAuthenticated = localStorage.getItem('token'); // Check if the user is authenticated
-  const hasSignedUp = localStorage.getItem('hasSignedUp'); // Check if the user has signed up
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    setIsLoggedIn(!!token);
+  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
-        {/* Redirect to Signup if no signup has occurred */}
-        <Route path="/" element={hasSignedUp ? <Navigate to="/login" /> : <Navigate to="/signup" />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={hasSignedUp ? <Login /> : <Navigate to="/signup" />} />
         
-        {/* Protected routes */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={ <Login />} />
         <Route
-          path="/home"
+          path="/"
           element={
             <ProtectedRoute>
               <Home />
@@ -50,3 +86,4 @@ function App() {
 }
 
 export default App;
+

@@ -17,7 +17,7 @@ const Header = () => (
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            Equati
+            Math
           </span>
           <span style={{
             fontSize: "40px",
@@ -26,12 +26,12 @@ const Header = () => (
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            AI
+            Sharthi
           </span>
         </Typography>
       </Box>
-      <span style={{margin: "10px"}}>|</span>
-    <span className="description" style={{color: "#4557f3", fontSize: "20px", textAlign: "center"}}>Simplifying math, one equation at a time</span>
+      <span style={{margin: "10px", fontSize:"30px"}}>|</span>
+    <span className="description" style={{color: "#4557f3", fontSize: "15px", textAlign: "center"}}>Simplifying math, one equation at a time</span>
  </Box>  
 );
 

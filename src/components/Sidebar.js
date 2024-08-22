@@ -13,15 +13,17 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewChat, setCurrentChat, setLoading } from '../store/store';
 import { AiOutlineAppstore } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import PlanModel from './PlanModel';
+
 
 
 
 const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
 
-  const [historySelected, setHostorySelected] = useState(false)
   const [previousChatOpen, setPreviousChatOpen] = useState(false)
   const [isModalOpen, setModalOpen] = useState(false);
+
 
   const onIconClick = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -42,28 +44,17 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
     navigate('/chats')
   };
 
-  const tabs = ["plus", "home", "chatHistory"];
-
-  const [selectedTab, setTab] = useState(tabs[1]);
-
-  const sidebarToggle = () => {
-
-  };
-
   const onPlusClick = () => {
-    setTab(tabs[0]);
     dispatch(setLoading(false))
     dispatch(addNewChat());
     navigate('/chats')
   };
 
   const onClickHome = () => {
-    setTab(tabs[1]);
     navigate("/");
   };
 
   const onClickChatHistory = () => {
-    setTab(tabs[2]);
     setPreviousChatOpen(!previousChatOpen)
   };
 
@@ -75,21 +66,30 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
     navigate("/login");
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove token from localStorage
+    navigate('/login'); // Redirect to login page
+  };
+
+
 
 
   const drawerWidth = isSidebarOpen ? 70 : 180;
+  const togglebtn = isSidebarOpen ? "32px" : "130px";
+  
 
   const RenderListItems = () => {
     const listOptions = [
       { text: 'Chat PDF', icon: <BsFillFolderFill />, click: onClickPdf },
       { text: 'AI Writer', icon: <BsPencilSquare />, click: ()=>{} },
-      {text: 'Work Flow', icon: <GoStack/>, click: ()=>{}},
-       {text: "plan", icon: <AiOutlineAppstore/>, click: toggleModal}
+      {text: 'Work Space', icon: <GoStack/>, click: ()=>{}},
+      {text: "plan", icon: <AiOutlineAppstore/>, click: toggleModal}
     ];
 
     return (
       <List component='ul' style={{ marginLeft: "10px", 
                                     padding: isSidebarOpen ? "10px" : "10px",
+                                    cursor:"pointer"
                                     // display: isSidebarOpen &&  "flex",
                                     // flexDirection: isSidebarOpen &&  "column",
                                     // justifyContent: isSidebarOpen &&  "center"
@@ -106,7 +106,8 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
                         outline: "none",
                         // padding: "",
                         borderWidth: "0px",
-                        borderRadius: "3px"
+                        borderRadius: "3px",
+                        cursor:"pointer"
                         }}>
             <FaSquarePlus 
               style={{
@@ -123,7 +124,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
           key={index} 
           component="li"
           onClick={option.click}
-          style={{padding: "5px", margin: "10px 10px 0px 0px"}}
+          style={{padding: "5px", margin: "10px 10px 0px 0px", cursor:"pointer"}}
           >
           {React.cloneElement(option.icon, {
             style: {
@@ -145,6 +146,8 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
               color: "#bfbfbf",
               fontWeight: 800,
               backgroundColor: option.isSelected ? '#B0B0B0' : 'transparent', // Grey background for selected option
+              fontWeight: currentChatIndex === index ? 800 : 500,
+              backgroundColor:  currentChatIndex === index && '#331a00',
               '&:hover': {
                 color: 'transparent', // Make text transparent to show gradient
                 background: 'linear-gradient(90deg, #FF5722, #2196F3)',
@@ -157,16 +160,44 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
           </Typography>}
         </ListItem>
       ))}
+      {isModalOpen &&
        <div className="sidebar-item" onClick={onIconClick}>
               <AiOutlineAppstore size={30} onClick={toggleModal} style={{ cursor: 'pointer' }} />
               {isSidebarOpen && <p className="sidebar-description">Plans</p>}
               {isModalOpen && <PlanModel isOpen={isModalOpen} onClose={toggleModal} />} 
               {/* {isModalOpen && <Modal closeModal={closeModal} />} */}
-             </div> 
+       </div>
+  }
+       <button onClick={onClickSidebar} style={{
+            backgroundColor: "transparent",
+            height: "40px",
+            zIndex: 24,
+            width: "18px",
+            padding: "2px",
+            // margin: "0px 0px 0px 25px",
+            borderTopLeftRadius: "5px",
+            borderBottomLeftRadius: "5px",
+            textAlign: "left",
+            outline: "none",
+            borderWidth: "0px",
+            color: "#ffffff",
+            marginLeft: togglebtn,
+            position: "relative",
+            left: "2px",
+            cursor:"pointer"
+            // right: isSidebarOpen && "20%",
+          }}>
+           
+          {isSidebarOpen ? <MdOutlineArrowForwardIos style={{fontSize: "15px", margin: "1px 15px 0px 0px"}}/>
+          : <MdOutlineArrowBackIos style={{fontSize: "15px", margin: "1px 15px 0px 0px"}}/>}
+              
+          </button>
       <Divider color="#3E3E3E"/>
+      
       <ListItem component="li" onClick={onClickChatHistory} style={{padding: "3px", 
-                                        margin: "10px 10px 0px 0px", 
-                                        display: 'flex'
+                                        margin: "2px 10px 0px 0px", 
+                                        display: 'flex',
+                                        cursor:"pointer"
                                         }}>
         <MdHistory  style={
               {fontSize: "20px", 
@@ -209,6 +240,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
 
 
   const ChatHistoryComponent = () =>{
+    console.log(chats)
     return (
       <Box variant="permanent"
               sx={{
@@ -216,12 +248,15 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
                 marginBottom: "auto",
                 height: "200px",
                 overflow: "auto",
-                padding: "10px"
+                padding: "10px",
+                cursor:"pointer"
               }}
               >
      
         <div>
-          {chats.map((chat, index) =>(
+          {chats.map((chat, index) =>{
+            // console.log(chat)
+            return(
             chat.messages.length > 1 &&   
             <div key={index} 
                 style={{ cursor: 'pointer', 
@@ -229,7 +264,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
                          backgroundColor:  currentChatIndex === index && '#331a00',
                          listStyleType: "none",
                          margin: "10px 20px 10px 0px", 
-                         color: "#ffffff",
+                         color: "yellow",
                          fontSize: "10px",
                          fontFamily: "Roboto",
                          padding: "3px",
@@ -238,9 +273,16 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
                         }} 
                          onClick={() => handleChatSelection(index)}
                          >
-              <p style={{margin: "2px"}}>{chat.messages[0]?.content[0].text}</p>
+               <p style={{ margin: "2px" }}>
+                {chat.messages[0]?.content[0].text}
+              </p>
+              {chat.messages[0]?.content[0].imageName && (
+                <p style={{ margin: "2px", fontStyle: "italic" }}>
+                  {chat.messages[0].content[0].imageName}
+                </p>
+              )}
             </div>
-             ))}
+             )})}
         </div>
       </Box>
     )
@@ -256,10 +298,10 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', backgroundColor: "#000000", overflow: "hidden" },
       }}
     >
-      <Box onClick={onClickHome} sx={{ margin: "20px 0px 0px 10px", display: "flex" }}>
+      <Box onClick={onClickHome} sx={{ margin: "20px 0px 0px 20px", display: "flex", cursor:"pointer" }}>
         <img src={tectsharthilogo}
           alt="logo"
-          style={{ height: "25px", width: "30px", marginTop: "10px" }}
+          style={{ height: "30px", width: "33px", marginTop: "10px" }}
         />
        { !isSidebarOpen && <Typography sx={{ marginTop: "10px" }}>
           <span style={{
@@ -267,9 +309,10 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
             fontWeight: 'bold',
             background: 'linear-gradient(90deg, #ff7e5f, #feb47b)',
             WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+            WebkitTextFillColor: 'transparent',
+            marginLeft:"5px",
           }}>
-            Equati
+            Math
           </span>
           <span style={{
             fontSize: "20px",
@@ -278,41 +321,16 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            AI
+            Sharthi
           </span>
         </Typography>}
       </Box>
        <RenderListItems />
-       <button onClick={onClickSidebar} style={{
-            backgroundColor: "transparent",
-            height: "40px",
-            zIndex: 24,
-            width: "18px",
-            padding: "2px",
-            // margin: "0px 0px 0px 25px",
-            borderTopLeftRadius: "5px",
-            borderBottomLeftRadius: "5px",
-            textAlign: "left",
-            outline: "none",
-            borderWidth: "0px",
-            color: "#ffffff",
-            marginLeft: "auto",
-            position: "relative",
-            left: "2px",
-            // right: isSidebarOpen && "20%",
-            '&:hover': {
-              backgroundColor: "grey",
-            }
-          }}>
-           
-          {isSidebarOpen ? <MdOutlineArrowForwardIos style={{fontSize: "15px", margin: "1px 15px 0px 0px"}}/>
-          : <MdOutlineArrowBackIos style={{fontSize: "15px", margin: "1px 15px 0px 0px"}}/>}
-              
-          </button>
+       
       {previousChatOpen && <ChatHistoryComponent/>}
-      <Box sx={{ margin: !isSidebarOpen && "auto 20px 30px 20px", marginTop : "auto" }}>
+      <Box sx={{ margin: !isSidebarOpen && "auto 20px 30px 20px", marginTop : "auto", cursor:"pointer" }}>
         <Button
-          onClick={()=>{navigate("/signup")}}
+          onClick={handleLogout}
           sx={{
                 textTransform: 'none', 
                 boxShadow: 'none', 
@@ -325,7 +343,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
                 borderRadius: isSidebarOpen ? "80px" : "2px"
               }}
         >
-          {isSidebarOpen ? "s" : "sign-up/login"}
+          {isSidebarOpen ? <CgProfile /> : "Logout"}
         </Button>
       </Box>
     </Drawer>

@@ -8,11 +8,12 @@ export const sendMessageToApi = async (messages) => {
   return response.data;
 };
 
+
 export const uploadFileToApi = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await axios.post(`${AUTH_URL}/upload`, formData);
+  const response = await axios.post(`${API_BASE_URL}/upload`, formData);
   return response.data;
 };
 
@@ -20,25 +21,19 @@ export const uploadFileToApi = async (file) => {
 export const signupUser = async (userData) => {
   try {
     console.log(userData);
+    const headers = {
+      'Content-Type': 'application/json',
+     };
 
-    const response = await fetch(`${AUTH_URL}/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-       },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Signup failed');
-    }
-
-    const responseData = await response.json();
-    return responseData;
+    const response = await axios.post(`${AUTH_URL}/signup`, userData, { headers });
+    return response.data;
   } catch (error) {
     console.log(error);
-    throw new Error(error.message || 'Network error');
+    if (error.response) {
+      throw new Error(error.response.data.error || 'Signup failed');
+    } else {
+      throw new Error('Network error');
+    }
   }
 };
 
@@ -47,7 +42,7 @@ export const signupUser = async (userData) => {
 // Login Service
 export const loginUser = async (loginData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/login`, loginData);
+    const response = await axios.post(`${AUTH_URL}/login`, loginData);
     return response.data;
   } catch (error) {
     if (error.response) {

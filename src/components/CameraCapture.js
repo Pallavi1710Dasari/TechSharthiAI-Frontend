@@ -20,16 +20,16 @@ const CameraCapture = ({ onCapture, onClose, isCameraCaptureOpen }) => {
   return (
     <Dialog onClose={handleClose} open={isCameraCaptureOpen}>
       <Box sx={{height: "300px", width: "300px", padding: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-      <FaTimes onClick={handleClose} className="close-icon" style={{ cursor: 'pointer', marginBottom: '10px' }} />
-      <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        className="webcam"
-        style={{ width: '100%', borderRadius: '8px' }}
-      />
-      <TbHandClick onClick={capture} style={{ cursor: 'pointer', marginTop: '10px', fontSize: '24px' }} />
-      <Typography sx={{fontSize: "12px", fontWeight: 800}}>Capture</Typography>
+        <FaTimes onClick={handleClose} className="close-icon" style={{ cursor: 'pointer', marginBottom: '10px' }} />
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              className="webcam"
+              style={{ width: '100%', borderRadius: '8px' }}
+            />
+          <TbHandClick onClick={capture} style={{ cursor: 'pointer', marginTop: '10px', fontSize: '24px' }} />
+        <Typography sx={{fontSize: "12px", fontWeight: 800}}>Capture</Typography>
       </Box>
     </Dialog>
   );

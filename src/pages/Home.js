@@ -54,7 +54,7 @@ function Home() {
                   },
                   }}>
             <Header />
-            <UploadSection pdfInputRef={pdfInputRef} ImageInputRef={ImageInputRef}/>
+            <UploadSection fileInputRef={fileInputRef} pdfInputRef={pdfInputRef} ImageInputRef={ImageInputRef}/>
             <AISection />
             {/* <TemplatesSection /> */}
         </Box>

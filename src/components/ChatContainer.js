@@ -2,19 +2,19 @@ import { Box } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import { useSelector } from 'react-redux';
- 
+
 function ChatContainer({ renderMessageContent}) {
   const { chats, currentChatIndex, loading } = useSelector((state) => state.chat);
   const chatEndRef = useRef(null);
- 
+
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
- 
+
   useEffect(() => {
     scrollToBottom();
   }, [chats[currentChatIndex]?.messages]);
- 
+
   return (
     <Box style={{
        width: "100%"
@@ -22,19 +22,19 @@ function ChatContainer({ renderMessageContent}) {
       {chats[currentChatIndex]?.messages.map((message, index) => (
         <Box key={index} sx={{
           fontSize: "14px",
-          color: "#ffffff",
-          fontWeight: 800,
+          color: "#000000",
+          fontWeight: 400,
           padding: "10px",
           display: "flex",
           flexDirection: "column",
           alignItems : message.role === "user" ? "flex-end" : "flex-start",
         }}>
-          <Box sx={{width: "fit-content",
+          <Box sx={{width: "fit-content", 
                     maxWidth: "50%",
                     height: "fit-content",
                     maxHeight: "50%",
-                    padding: "10px",
-                    backgroundColor: message.role === "user" ? "#8dbcff" : "#d69f4c",
+                    padding: "10px", 
+                    backgroundColor: message.role === "user" ? "#a9abab" : "#e0beed",
                     borderRadius: "10px"
                     }}>
             {renderMessageContent(message.content)}
@@ -50,5 +50,6 @@ function ChatContainer({ renderMessageContent}) {
     </Box>
   );
 }
- 
+
 export default ChatContainer;
+

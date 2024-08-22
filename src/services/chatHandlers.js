@@ -1,22 +1,22 @@
 import { setMessages, setUserInput, setLoading, setFileSelected } from '../store/store';
 import { sendMessageToApi, uploadFileToApi } from '../services/serviceApi';
- 
+
 export const handleSendMessage = async (chats, currentChatIndex, dispatch) => {
   if (chats[currentChatIndex].userInput.trim()) {
     const newMessage = { role: 'user', content: [{ type: 'text', text: chats[currentChatIndex].userInput }] };
     const updatedMessages = [...chats[currentChatIndex].messages, newMessage];
     dispatch(setMessages({ chatIndex: currentChatIndex, messages: updatedMessages }));
     dispatch(setUserInput({ chatIndex: currentChatIndex, userInput: '' }));
- 
+
     try {
       dispatch(setLoading(true));
       const response = await sendMessageToApi(updatedMessages);
- 
+
       if (response.messages) {
         const assistantMessageContent = response.messages
           .map(msg => msg.content.map(c => c.text || '').join(' '))
           .join('\n\n');
- 
+
         const assistantMessage = {
           role: 'assistant',
           content: [{ type: 'text', text: assistantMessageContent }],
@@ -30,21 +30,21 @@ export const handleSendMessage = async (chats, currentChatIndex, dispatch) => {
     }
   }
 };
- 
+
 export const handleFileChange = async (event, dispatch, chats, currentChatIndex) => {
- 
+
   const file = event.target.files[0];
- 
+
   console.log(file)
- 
+
   dispatch(setFileSelected(true));
   if (file) {
     console.log("hello from file")
- 
+
     try {
       dispatch(setLoading(true));
       const response = await uploadFileToApi(file);
- 
+
       if (response.image_url) {
         const newImageMessage = { role: 'user', content: [{ type: 'image_url', text: file?.name, image_url: { url: response.image_url } }] };
         dispatch(setMessages({ chatIndex: currentChatIndex, messages: [...chats[currentChatIndex].messages, newImageMessage] }));
@@ -61,7 +61,7 @@ export const handleFileChange = async (event, dispatch, chats, currentChatIndex)
     }
   }
 };
- 
+
 export const handleSendImageAsPDF = async (pdfBlob, dispatch, chats, currentChatIndex) => {
   console.log('pdf', pdfBlob)
   try {
@@ -77,17 +77,17 @@ export const handleSendImageAsPDF = async (pdfBlob, dispatch, chats, currentChat
     dispatch(setLoading(false));
   }
 };
- 
- 
+
+
 export const handleCapture = async (imageSrc, dispatch, chats, currentChatIndex) => {
   try {
     dispatch(setLoading(true));
     const response = await fetch(imageSrc);
     const blob = await response.blob();
- 
+
     const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
     const uploadResponse = await uploadFileToApi(file);
- 
+
     if (uploadResponse.image_url) {
       const newImageMessage = { role: 'user', content: [{ type: 'image_url', image_url: { url: uploadResponse.image_url } }] };
         dispatch(setMessages({ chatIndex: currentChatIndex, messages: [...chats[currentChatIndex].messages, newImageMessage] }));
