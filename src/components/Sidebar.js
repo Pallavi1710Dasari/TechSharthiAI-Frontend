@@ -84,7 +84,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
       { text: 'Chat PDF', icon: <BsFillFolderFill />, click: onClickPdf },
       { text: 'AI Writer', icon: <BsPencilSquare />, click: ()=>{} },
       {text: 'Work Flow', icon: <GoStack/>, click: ()=>{}},
-      // {text: "plan", icon: <AiOutlineAppstore/>, click: toggleModal}
+       {text: "plan", icon: <AiOutlineAppstore/>, click: toggleModal}
     ];
 
     return (
@@ -157,12 +157,12 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
           </Typography>}
         </ListItem>
       ))}
-       {/* <div className="sidebar-item" onClick={onIconClick}>
+       <div className="sidebar-item" onClick={onIconClick}>
               <AiOutlineAppstore size={30} onClick={toggleModal} style={{ cursor: 'pointer' }} />
               {isSidebarOpen && <p className="sidebar-description">Plans</p>}
-              {isModalOpen && <PlanModel isOpen={isModalOpen} onClose={toggleModal} />} */}
+              {isModalOpen && <PlanModel isOpen={isModalOpen} onClose={toggleModal} />} 
               {/* {isModalOpen && <Modal closeModal={closeModal} />} */}
-            {/* </div> */}
+             </div> 
       <Divider color="#3E3E3E"/>
       <ListItem component="li" onClick={onClickChatHistory} style={{padding: "3px", 
                                         margin: "10px 10px 0px 0px", 
@@ -312,7 +312,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
       {previousChatOpen && <ChatHistoryComponent/>}
       <Box sx={{ margin: !isSidebarOpen && "auto 20px 30px 20px", marginTop : "auto" }}>
         <Button
-          onClick={()=>{navigate("/login")}}
+          onClick={()=>{navigate("/signup")}}
           sx={{
                 textTransform: 'none', 
                 boxShadow: 'none', 

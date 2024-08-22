@@ -104,6 +104,7 @@ const PlanModel = ({ isOpen, onClose }) => {
               borderRadius: '10px',
               width: '30%',
               textAlign: 'center',
+              margin:"7px",
             }}
           >
             <h2 style={{ color: '#fff', fontSize: '20px' }}>FREE</h2>
@@ -142,6 +143,7 @@ const PlanModel = ({ isOpen, onClose }) => {
               borderRadius: '10px',
               width: '30%',
               textAlign: 'center',
+              margin:"7px",
             }}
           >
             <h2 style={{ color: '#fff', fontSize: '20px' }}>PRO</h2>
@@ -175,11 +177,12 @@ const PlanModel = ({ isOpen, onClose }) => {
           </div>
           <div
             style={{
-              backgroundColor: '#c976c1',
+              backgroundColor: 'orange',
               padding: '15px',
               borderRadius: '10px',
               width: '30%',
               textAlign: 'center',
+              margin:"7px",
             }}
           >
             <h2 style={{ color: '#fff', fontSize: '20px' }}>Unlimited</h2>
@@ -187,13 +190,13 @@ const PlanModel = ({ isOpen, onClose }) => {
               ₹2746.3/mo
             </h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li style={{ marginBottom: '10px', color: '#bbb' }}>
+              <li style={{ marginBottom: '10px', color: '#fff' }}>
                 Unlimited Usage Volume
               </li>
-              <li style={{ marginBottom: '10px', color: '#bbb' }}>
+              <li style={{ marginBottom: '10px', color: '#fff' }}>
                 Unlimited Chat PDF
               </li>
-              <li style={{ marginBottom: '10px', color: '#bbb' }}>
+              <li style={{ marginBottom: '10px', color: '#fff' }}>
                 Unlimited AI Presentation
               </li>
             </ul>
