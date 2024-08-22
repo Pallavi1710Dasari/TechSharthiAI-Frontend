@@ -71,6 +71,10 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
     navigate('/login'); // Redirect to login page
   };
 
+  const onClickAiwriter=()=>{
+    navigate('aiwriter')
+  }
+
 
 
 
@@ -81,7 +85,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
   const RenderListItems = () => {
     const listOptions = [
       { text: 'Chat PDF', icon: <BsFillFolderFill />, click: onClickPdf },
-      { text: 'AI Writer', icon: <BsPencilSquare />, click: ()=>{} },
+      { text: 'AI Writer', icon: <BsPencilSquare />, click: onClickAiwriter },
       {text: 'Work Space', icon: <GoStack/>, click: ()=>{}},
       {text: "plan", icon: <AiOutlineAppstore/>, click: toggleModal}
     ];

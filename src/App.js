@@ -38,6 +38,7 @@ import Chat from './pages/Chat';
 import PdfPage from './pages/PdfPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import AIWriter from './pages/Aiwriter';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
@@ -77,6 +78,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PdfPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/aiwriter"
+          element={
+            <ProtectedRoute>
+              <AIWriter />
             </ProtectedRoute>
           }
         />
