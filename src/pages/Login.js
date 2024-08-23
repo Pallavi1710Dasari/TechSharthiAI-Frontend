@@ -49,7 +49,14 @@ const Login = () => {
           {/* <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#000000' }}>Math Sharthi / Login</h2>
           <h2 style={{ fontSize: '14px', fontWeight: '400', color: '#555' }}>Your Personal AI Workspace</h2> */}
         </div>
-        <Typography component="h1" variant="h5" style={{ fontSize: '20px', fontWeight: '600', color: '#000', marginBottom: '20px' }}>
+        <Typography component="h1" variant="h5" sx={{ fontSize: '20px', 
+                                                      fontWeight: '600', 
+                                                      color: '#edb418', 
+                                                      marginBottom: '20px',
+                                                      background: 'linear-gradient(90deg, #ff7e5f, #feb47b,  #2a91ff, #4557f3)',
+                                                      WebkitBackgroundClip: 'text',
+                                                      WebkitTextFillColor: 'transparent' 
+                                                      }}>
         Math Sharthi / Login
         </Typography>
         <form onSubmit={handleLogin} style={{ marginBottom: '15px' }}>
@@ -82,7 +89,7 @@ const Login = () => {
             style={{ marginBottom: '15px' }}
           />
           {error && <Typography color="error" style={{ marginBottom: '15px', color: 'red' }}>{error}</Typography>}
-          <Button type="submit" fullWidth variant="contained" color="primary" style={{ marginBottom: '15px', backgroundColor: '#a78bfa' }}>
+          <Button type="submit" fullWidth variant="outlined" color="primary" style={{ marginBottom: '15px',   }}>
             Log In
           </Button>
         </form>
@@ -91,7 +98,7 @@ const Login = () => {
           variant="outlined"
           color="secondary"
           onClick={handleSignUpNavigation}
-          style={{ marginBottom: '15px', borderColor: '#a78bfa', color: '#a78bfa' }}
+          style={{ marginBottom: '15px', borderColor: '#a78bfa', color: '#ffffff',  backgroundImage:"linear-gradient(90deg,  #4557f3, #2a91ff, #feb47b, #ff7e5f)"}}
         >
           Sign Up
         </Button>
