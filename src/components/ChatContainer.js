@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import { useSelector } from 'react-redux';
+import EqualizerText from './AnimationText';
 
 function ChatContainer({ renderMessageContent}) {
   const { chats, currentChatIndex, loading } = useSelector((state) => state.chat);
@@ -19,6 +20,7 @@ function ChatContainer({ renderMessageContent}) {
     <Box style={{
        width: "100%"
     }}>
+      <EqualizerText/>
       {chats[currentChatIndex]?.messages.map((message, index) => (
         <Box key={index} sx={{
           fontSize: "14px",
@@ -29,6 +31,7 @@ function ChatContainer({ renderMessageContent}) {
           flexDirection: "column",
           alignItems : message.role === "user" ? "flex-end" : "flex-start",
         }}>
+
           <Box sx={{width: "fit-content", 
                     maxWidth: "50%",
                     height: "fit-content",

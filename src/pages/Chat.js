@@ -5,6 +5,7 @@ import ChatContainer from '../components/ChatContainer';
 import InputContainer from '../components/InputContainer';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 function Chat({ setPreviousChatOpen, previousChatOpen }) {
   const dispatch = useDispatch();
   const fileInputRef = React.useRef(null);
@@ -57,6 +58,7 @@ function Chat({ setPreviousChatOpen, previousChatOpen }) {
         }}
       >
         <ChatContainer renderMessageContent={renderMessageContent} />
+        
       </Box>
       <InputContainer
         pdfInputRef={pdfInputRef}
