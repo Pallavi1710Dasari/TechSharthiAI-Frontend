@@ -177,7 +177,7 @@ const PlanModel = ({ isOpen, onClose }) => {
           </div>
           <div
             style={{
-              backgroundColor: 'orange',
+              backgroundColor: '#e8f7be',
               padding: '15px',
               borderRadius: '10px',
               width: '30%',
@@ -185,18 +185,18 @@ const PlanModel = ({ isOpen, onClose }) => {
               margin:"5px",
             }}
           >
-            <h2 style={{ color: '#fff', fontSize: '20px' }}>Unlimited</h2>
-            <h3 style={{ color: '#fff', fontSize: '24px', margin: '10px 0' }}>
+            <h2 style={{ color: '#3c3d3a', fontSize: '20px' }}>Unlimited</h2>
+            <h3 style={{ color: '#3c3d3a', fontSize: '24px', margin: '10px 0' }}>
               ₹2746.3/mo
             </h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li style={{ marginBottom: '10px', color: '#bbb' }}>
+              <li style={{ marginBottom: '10px', color: '#666960' }}>
                 Unlimited Usage Volume
               </li>
-              <li style={{ marginBottom: '10px', color: '#bbb' }}>
+              <li style={{ marginBottom: '10px', color: '#666960' }}>
                 Unlimited Chat PDF
               </li>
-              <li style={{ marginBottom: '10px', color: '#bbb' }}>
+              <li style={{ marginBottom: '10px', color: '#666960' }}>
                 Unlimited AI Presentation
               </li>
             </ul>

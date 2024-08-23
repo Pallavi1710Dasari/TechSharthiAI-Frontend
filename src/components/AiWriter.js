@@ -140,11 +140,11 @@ function AIWriter() {
           </Button>
         </Grid>
       </Grid>
-       <Box sx={{ padding: "20px", margin: "auto" }}>
+       { generatedText && <Box sx={{ padding: "20px", margin: "auto" }}>
           <Typography variant="h6" sx={{color: "orange"}}>Generated Text:</Typography>
              {generatedText ? formatText(generatedText) :
            <Typography variant="body1">No text generated</Typography>}
-        </Box>
+        </Box>}
     </Grid>
   );
 }
