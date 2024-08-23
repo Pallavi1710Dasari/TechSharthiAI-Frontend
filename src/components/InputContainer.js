@@ -35,7 +35,7 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
  
   const OnImageChange = () =>{
     if (location.pathname === "/"){
-      dispatch(addNewChat());
+      // dispatch(addNewChat());
       ImageInputRef.current.click();
       navigate("/chats")
     }else{
@@ -120,14 +120,14 @@ const InputContainer = ({ fileInputRef, ImageInputRef, pdfInputRef, pdfPage }) =
           />
       </Grid>
        <Grid item xs={6} sx={{display: "flex"}}>
-           <IconButton color="primary" aria-label="plus" onClick={openPopup} sx={{fontSize: "15px", margin: "5px 10px 5px 0px"}}>
+           <IconButton color="primary" aria-label="plus" onClick={openPopup} sx={{fontSize: "18px", fontWeight:'bold', margin: "5px 10px 5px 0px"}}>
               <AiOutlinePlus/>
            </IconButton>
            {isPopupOpen &&
            <Popup handleCameraClick={handleCameraClick} handleFileChange={handleFileChange} closePopup={closePopup} isPopupOpen={isPopupOpen} popupButton={popupButton}/>}
-             <IconButton color="primary" aria-label="image" sx={{fontSize: "15px", margin: "5px 10px 5px 0px"}} onClick={OnImageChange}>    
+             {/* <IconButton color="primary" aria-label="image" sx={{fontSize: "15px", margin: "5px 10px 5px 0px"}} onClick={OnImageChange}>    
                 <FaRegImage/>
-              </IconButton>
+              </IconButton> */}
           <input
             type="file"
             id="image-upload"

@@ -39,22 +39,22 @@ const UploadSection = ({pdfInputRef, ImageInputRef, pdfPage, fileInputRef}) => {
         </Button>
         {/* <Button variant="outlined" sx={{ml: "auto", alignSelf: "flex-end" }}><i className="material-icons"></i></Button> */}
       </Box>
-      {/* <Box onClick={onUploadImageClick} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+      <Box  sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
         <Typography variant="caption" sx={{
                                           display: 'flex',
                                           alignItems: 'center',
-                                          textDecoration: "underline",
-                                          '&:hover': {
+                                          // textDecoration: "underline",
+                                            fontSize:"13px",
                                             color: 'transparent', // Make text transparent to show gradient
                                             background: 'linear-gradient(90deg, #FF5722, #2196F3)',
                                             WebkitBackgroundClip: 'text',
                                             WebkitTextFillColor: 'transparent',
-                                          }
+                                          
                                           }}>
-          <input type="checkbox" />
-          Upload Images From Here
+          
+          {pdfPage ? "* Upload .PDF only" : "* Upload .PDF .PNG  .jpg .jpeg only"}
         </Typography>
-      </Box> */}
+      </Box> 
   </Card>
 )};
  

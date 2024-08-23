@@ -73,7 +73,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
   };
 
   const onClickAiwriter=()=>{
-    navigate('aiwriter')
+    navigate('/aiwriter')
   }
 
 
@@ -188,7 +188,13 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
             color: "#ffffff",
             marginLeft: togglebtn,
             position: "relative",
-            left: "2px",
+            '&:hover': {
+                color: 'transparent', // Make text transparent to show gradient
+                background: 'linear-gradient(90deg, #FF5722, #2196F3)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              },
+            left: "5px",
             cursor:"pointer"
             // right: isSidebarOpen && "20%",
           }}>
@@ -343,7 +349,7 @@ const Sidebar = ({isSidebarOpen, onClickSidebar}) => {
       </Box>
        <RenderListItems />
        
-      {previousChatOpen && <ChatHistoryComponent/>}
+      {previousChatOpen & !isSidebarOpen && <ChatHistoryComponent />}
       <Box sx={{ margin: !isSidebarOpen && "auto 20px 30px 20px", marginTop : "auto", cursor:"pointer" }}>
         <Button
           onClick={handleLogout}

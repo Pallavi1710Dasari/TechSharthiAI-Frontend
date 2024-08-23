@@ -34,7 +34,7 @@ function ChatContainer({ renderMessageContent}) {
                     height: "fit-content",
                     maxHeight: "50%",
                     padding: "10px", 
-                    backgroundColor: message.role === "user" ? "#a9abab" : "#e0beed",
+                    backgroundColor: message.role === "user" ? "#f0f4fa" : "#e0beed",
                     borderRadius: "10px"
                     }}>
             {renderMessageContent(message.content)}

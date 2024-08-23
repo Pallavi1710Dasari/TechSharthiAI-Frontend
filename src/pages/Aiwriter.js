@@ -1,59 +1,66 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import { CssBaseline, Box, Drawer, Toolbar, Typography, AppBar, Button } from '@mui/material';
+import ContentArea from '../components/ContentArea';
+import tectsharthilogo from '../public/techsharthilogo.png'
+import Header from '../components/Header';
+import UploadSection from '../components/UploadSection';
+import AISection from '../components/AISection';
+import TemplatesSection from '../components/TemplateSection';
+import InputContainer from '../components/InputContainer';
+import Aiwriter from '../components/AiWriter';
+import { useDispatch, useSelector } from 'react-redux';
  
-function AIWriter() {
-  const [inputText, setInputText] = useState('');
-  const [noWords, setNoWords] = useState('');
-  const [blogStyle, setBlogStyle] = useState('Researchers');
-  const [generatedText, setGeneratedText] = useState('');
  
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/ai_writer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input_text: inputText, no_words: noWords, blog_style: blogStyle })
-      });
-     
-      const data = await response.json();
-      if (response.ok) {
-        setGeneratedText(data.generated_text);
-      } else {
-        console.error("Error:", data.error);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
+function AIwriter() {
+ 
+  const dispatch = useDispatch();
+  const fileInputRef = React.useRef(null);
+  const ImageInputRef = React.useRef(null);
+  const pdfInputRef = React.useRef(null)
+ 
+  const { chats, currentChatIndex } = useSelector((state) => state.chat);
+ 
+  const renderMessageContent = (content) => {
+    if (content[0].type === 'text') {
+      const formattedText = content[0].text
+        .split('\n')
+        .map((str, index, arr) => {
+          const trimmedStr = index < arr.length - 1 ? str.trimEnd() : str;
+          const boldItalic = trimmedStr
+            .replace(/\*\*(.*?)\*\*/g, '<b><i>$1</i></b>')
+            .replace(/\*(.*?)\*/g, '<i>$1</i>')
+            .replace(/__(.*?)__/g, '<b>$1</b>');
+          return <span key={index} dangerouslySetInnerHTML={{ __html: boldItalic }} />;
+        });
+ 
+      return <p>{formattedText.reduce((acc, curr) => [acc, ' ', curr])}</p>; // Join with space
+    } else if (content[0].type === 'image_url') {
+      return <img src={content[0].image_url.url} alt="Uploaded" style={{ maxWidth: '50%' }} />;
     }
   };
  
-  return (
-    <div>
-      <h2>AI Writer 🤖</h2>
-      <input
-        type="text"
-        placeholder="Enter the Blog Topic"
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="No of Words"
-        value={noWords}
-        onChange={(e) => setNoWords(e.target.value)}
-      />
-      <select
-        value={blogStyle}
-        onChange={(e) => setBlogStyle(e.target.value)}
-      >
-        <option value="Researchers">Researchers</option>
-        <option value="Data Scientist">Data Scientist</option>
-        <option value="Common People">Common People</option>
-      </select>
-      <button onClick={handleSubmit}>Generate</button>
  
-      {generatedText && <div><h3>Generated Text:</h3><p>{generatedText}</p></div>}
-    </div>
+ 
+  return (
+    // <Box sx={{overflow: 'hidden', backgroundColor: "#000000", height: "100%",  }}>
+      <ContentArea>  
+        <Box sx={{height: "100%",
+                  width: "600px",
+                  boxSizing: "border-box",
+                  overflowY: "auto",
+                  scrollbarWidth: 'none', /* Firefox */
+                  '-ms-overflow-style': 'none', /* IE and Edge */
+                  '&::-webkit-scrollbar': {
+                    display: 'none', /* Chrome, Safari, and Opera */
+                  },
+                  display: "flex",
+                  justifyContent: "center"
+                  }}>
+           <Aiwriter/>
+        </Box>
+      </ContentArea>
+    // </Box>
   );
 }
  
-export default AIWriter;
- 
+export default AIwriter;
