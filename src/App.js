@@ -9,55 +9,57 @@ import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import  Location from './pages/Location';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const token = Cookies.get('token');
-    setIsLoggedIn(!!token);
-  }, []);
+  // useEffect(() => {
+  //   const token = Cookies.get('token');
+  //   setIsLoggedIn(!!token);
+  // }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/chats"
-          element={
-            <ProtectedRoute>
-              <Chat />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/chatwithdoc"
-          element={
-            <ProtectedRoute>
-              <PdfPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/aiwriter"
-          element={
-            <ProtectedRoute>
-              <AIWriter />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/signup" element={<Signup />} />
+    //     <Route path="/login" element={<Login />} />
+    //     <Route
+    //       path="/"
+    //       element={
+    //         <ProtectedRoute>
+    //           <Home />
+    //         </ProtectedRoute>
+    //       }
+    //     />
+    //     <Route
+    //       path="/chats"
+    //       element={
+    //         <ProtectedRoute>
+    //           <Chat />
+    //         </ProtectedRoute>
+    //       }
+    //     />
+    //     <Route
+    //       path="/chatwithdoc"
+    //       element={
+    //         <ProtectedRoute>
+    //           <PdfPage />
+    //         </ProtectedRoute>
+    //       }
+    //     />
+    //     <Route
+    //       path="/aiwriter"
+    //       element={
+    //         <ProtectedRoute>
+    //           <AIWriter />
+    //         </ProtectedRoute>
+    //       }
+    //     />
+    //     <Route path="*" element={<NotFound />} />
+    //   </Routes>
+    // </BrowserRouter>
+    <Location/>
   );
 }
 
